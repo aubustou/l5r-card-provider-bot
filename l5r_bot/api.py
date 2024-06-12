@@ -29,7 +29,7 @@ async def on_message(message):
 
     for match in matches:
         if card := image_database.get(match):
-            image_path = image_folder / next(card["images"]["0"].values())
+            image_path = image_folder / next(card["images"].values())
             image_data = BytesIO(image_path.read_bytes())
             await message.channel.send(
                 file=discord.File(image_data, filename=f"{match}.jpg")
