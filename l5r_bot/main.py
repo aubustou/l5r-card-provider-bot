@@ -131,9 +131,9 @@ def main():
 
     config = init_conf()
 
-    client.run(config["token"])
-
     from . import api  # noqa: F401
+
+    client.run(config["token"])
 
 
 if __name__ == "__main__":
