@@ -28,12 +28,25 @@ async def on_message(message):
     files: list[discord.File] = []
 
     for match in matches:
+        # match could be <image name> or <image name|edition>
+        if len(match := match.split("|")) == 2:
+            match, edition = match
+        else:
+            edition = None
+
         if card := image_database.get(match):
-            first_image = next(iter(card["images"].values()))
-            if not (image_path := next(image_folder.rglob(first_image.name), None)):
-                logger.warning("Image '%s' non trouvée.", match)
-                # await message.channel.send(f"Image '{match}' non trouvée.")
-                continue
+            if edition:
+                if not (image_path := card["images"].get(edition)):
+                    logger.warning(
+                        "Image '%s' non trouvée pour l'édition '%s'.", match, edition
+                    )
+                    continue
+            else:
+                first_image = next(iter(card["images"].values()))
+                if not (image_path := next(image_folder.rglob(first_image.name), None)):
+                    logger.warning("Image '%s' non trouvée.", match)
+                    continue
+
             image_data = BytesIO(image_path.read_bytes())
             files.append(discord.File(image_data, filename=f"{match}.jpg"))
         else:
