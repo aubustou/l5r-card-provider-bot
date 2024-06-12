@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "l5r-card-provider-bot"
+description = ""
+version = "0.1.0"
+authors = [
+    { name = "aubustou", email = "survivalfr@yahoo.fr" }
+]
+dependencies = [
+    "discord.py",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pdbpp",
+    "black",
+    "mypy",
+    "isort",
+    "pytest",
+]
+
+[project.scripts]
+run-bot = "l5r_bot.main:main"
+
+[tool.setuptools.packages]
+find = {namespaces = false}
+
+[tool.autoflake]
+remove_all_unused_imports = true
+ignore_init_module_imports = true
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = 'black'
+
+[tool.mypy]
+mypy_path = 'l5r_bot'
