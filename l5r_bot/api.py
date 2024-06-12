@@ -25,6 +25,8 @@ async def on_message(message):
     pattern = r"\[\[(.*?)\]\]"
     matches = re.findall(pattern, message.content)
 
+    files: list[discord.File] = []
+
     for match in matches:
         if card := image_database.get(match):
             first_image = next(iter(card["images"].values()))
@@ -33,9 +35,10 @@ async def on_message(message):
                 # await message.channel.send(f"Image '{match}' non trouvée.")
                 continue
             image_data = BytesIO(image_path.read_bytes())
-            await message.channel.send(
-                file=discord.File(image_data, filename=f"{match}.jpg")
-            )
+            files.append(discord.File(image_data, filename=f"{match}.jpg"))
         else:
             logger.warning("Image '%s' non trouvée.", match)
             # await message.channel.send(f"Image '{match}' non trouvée.")
+
+    if files:
+        await message.channel.send(files=files)
