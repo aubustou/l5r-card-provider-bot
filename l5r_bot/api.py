@@ -10,8 +10,6 @@ from .main import client, image_database, image_folder
 
 logger = logging.getLogger(__name__)
 
-breakpoint()
-
 
 @client.event
 async def on_ready():
