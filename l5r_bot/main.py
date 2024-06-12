@@ -109,9 +109,9 @@ def load_xml_database(path: Path) -> dict[str, Card]:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "database-path", help="Chemin du fichier XML contenant les données"
+        "database_path", help="Chemin du fichier XML contenant les données"
     )
-    parser.add_argument("image-folder", help="Chemin du dossier contenant les images")
+    parser.add_argument("image_folder", help="Chemin du dossier contenant les images")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO)
