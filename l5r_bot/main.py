@@ -103,6 +103,8 @@ def load_xml_database(path: Path) -> dict[str, Card]:
             ),  # Common if rarity is not specified
         }
 
+    logger.info("Loaded %d cards from %s", len(card_dict), path)
+
     return card_dict
 
 
@@ -127,6 +129,8 @@ def main():
     client = discord.Client(intents=intents)
 
     image_folder = args.image_folder
+    logger.info("Image folder: %s", image_folder)
+
     image_database = load_xml_database(args.database_path)
 
     config = init_conf()
