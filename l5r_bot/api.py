@@ -32,6 +32,7 @@ async def on_message(message):
         if len(match := match.split("|")) == 2:
             match, edition = match
         else:
+            match = match[0]
             edition = None
 
         if card := image_database.get(match):
