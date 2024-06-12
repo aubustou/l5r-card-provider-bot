@@ -5,7 +5,7 @@ import json
 import logging
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Required, TypedDict
+from typing import TypedDict
 
 import discord
 
@@ -32,9 +32,9 @@ def init_conf() -> dict[str, str]:
 
 
 class Card(TypedDict, total=False):
-    id: Required[str]
-    name: Required[str]
-    type: Required[str]
+    id: str
+    name: str
+    type: str
     rarity: str
     edition: str
     image: str
