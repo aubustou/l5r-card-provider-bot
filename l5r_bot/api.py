@@ -36,16 +36,17 @@ async def on_message(message):
 
         if card := image_database.get(match):
             if edition:
-                if not (image_path := card["images"].get(edition)):
+                if not (found_image := card["images"].get(edition)):
                     logger.warning(
                         "Image '%s' non trouvée pour l'édition '%s'.", match, edition
                     )
                     continue
             else:
-                first_image = next(iter(card["images"].values()))
-                if not (image_path := next(image_folder.rglob(first_image.name), None)):
-                    logger.warning("Image '%s' non trouvée.", match)
-                    continue
+                found_image = next(iter(card["images"].values()))
+
+            if not (image_path := next(image_folder.rglob(found_image.name), None)):
+                logger.warning("Image '%s' non trouvée.", match)
+                continue
 
             image_data = BytesIO(image_path.read_bytes())
             files.append(discord.File(image_data, filename=f"{match}.jpg"))
