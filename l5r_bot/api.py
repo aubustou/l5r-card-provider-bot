@@ -27,7 +27,11 @@ async def on_message(message):
 
     for match in matches:
         if card := image_database.get(match):
-            image_path = image_folder / next(card["images"].values())
+            first_image = next(list(card["images"].values()))
+            if not (image_path := next(image_folder.rglob(first_image.name), None)):
+                logger.warning("Image '%s' non trouvée.", match)
+                # await message.channel.send(f"Image '{match}' non trouvée.")
+                continue
             image_data = BytesIO(image_path.read_bytes())
             await message.channel.send(
                 file=discord.File(image_data, filename=f"{match}.jpg")
